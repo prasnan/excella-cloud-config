@@ -1,12 +1,35 @@
-Spring:
+server:
+  port: 8888
+  
+spring:
+  application:
+    name: cibil-score-service
+  config:
+    import: configserver://http://localhost:8888
+
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
-spring:
-  datasource:
-      password: HR
-      url: jdbc:oracle:thin:@10.90.1.105:1521/DEV
-      userName: HR
+    url: jdbc:oracle:thin:@10.90.1.105:1521/DEV
+    userName: HR
+    password: HR
+    
   jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true  
+        ddl-auto: update
+    show-sql: true  
+          
+management:  
+  endpoints: 
+    web:
+      exposure:
+        include:
+        - "*"
+
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka
